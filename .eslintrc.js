@@ -12,7 +12,9 @@ module.exports = {
     requireConfigFile: false
   },
   rules: {
+    'vue/multi-word-component-names': 0, // 强制驼峰法命名 - 关闭
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    // 'vue/multi-word-component-names': 'off'
   }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const obj = { name: '张三'}
+       function fn () {
+       console.log(this);
+      return () => {
+      console.log(this)
+     }
+   }
+     const resFn = fn.call(obj);
+    resFn();
+
+// let name = '张三';
+// let sayHello = `hello,my name is ${name}`; // hello, my name is zhangsan
+// console.log(sayHello);
+
+// const sayHello = function () {
+//    return '哈哈哈哈 追不到我吧 我就是这么强大';
+// };
+// let greet = `${sayHello()} 哈哈哈哈`;
+// console.log(greet); // 哈哈哈哈 追不到我吧 我就是这么强大 哈哈哈哈
+    </script>
+</body>
+
+</html>
