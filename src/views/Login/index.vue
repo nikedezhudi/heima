@@ -1,7 +1,11 @@
 <template>
   <div class="login-container">
     <!-- 顶部 -->
-    <van-nav-bar title="登录" />
+    <van-nav-bar title="登录">
+      <template #left>
+        <van-icon name="cross" @click="tiaozhuan" color='#ccc'/>
+      </template>
+    </van-nav-bar>
     <!-- 登录表单页面 -->
     <van-form @submit="onSubmit" ref="form">
       <van-field
@@ -76,7 +80,7 @@ export default {
           {
             required: true,
             // 校验规则如果不满足的提示消息
-            meaaage: '手机号码不能为空'
+            message: '手机号码不能为空'
           },
           {
             pattern: /^1[3456789]\d{9}$/,
@@ -86,7 +90,7 @@ export default {
         code: [
           {
             required: true,
-            meaaage: '验证码不能为空'
+            message: '验证码不能为空'
           },
           {
             pattern: /^\d{6}$/,
@@ -101,29 +105,41 @@ export default {
   created () {},
   mounted () {},
   methods: {
+    tiaozhuan () {
+      console.log('goug')
+      this.$router.push('/my')
+    },
     async onSubmit () {
       // 表单的校验
       // 这里的login是一个封装了的请求方法，必须在上面引入
       // await后面封装的是promise，只有promise成功了的情况才会继续执行
 
-      // 如果捕获await的错误，用try catch
+      // 捕获await的错误，用try catch
       try {
         const res = await login(this.user)
-        console.log(res)
+        // console.log(res)
+        // 登陆成功以后获取的数据存储到vuex和本地存储当中
+        this.$store.commit('setUser', res.data.data)
         Toast.success('登录成功')
+        // 登陆成功自动跳转到layout页面
+        this.$router.push('/')
       } catch (e) {
         Toast.fail(e?.response?.data?.message || '服务器端错误')
       }
     },
     async sendSmsCode () {
-      //
+      // 1.校验mobile表单
       try {
         await this.$refs.form.validate('mobile')
       } catch (e) {
         console.log(e)
         return
       }
-      // 接口错误
+      // 2.校验通过
+      // 2.1 按钮禁用 => 发送请求
+      // 发送成功 => 倒计时 => 成功的提示
+      // 发送失败 => 错误的提示
+      // 拿到结果 => 接触禁用
       try {
         // 如果接口请求速度很慢，接口获取到结果之前，我的按钮一直可以重复点击（重复发送请求）
         // 希望：接口拿到结果之后才可以进行下一次点击
@@ -137,7 +153,7 @@ export default {
       } catch (e) {
         // 如果获取失败了，进行错误的提示
         this.$toast.fail(e.response.data.message || '出错了')
-        this.isShowCountDown = false
+        // this.isShowCountDown = false
       } finally {
         this.isDisabled = false
       }
