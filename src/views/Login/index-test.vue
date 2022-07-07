@@ -1,16 +1,6 @@
 <template>
   <div class="login-container">
-    <!--    <van-button @click"">点击</van-button>-->
-    <van-nav-bar title="登录">
-      <template #left>
-        <van-icon @click="$router.back()" color="red" name="like" />
-        <!--        <ToutiaoIcon-->
-        <!--          @click.native="$router.back()"-->
-        <!--          style="color: white"-->
-        <!--          icon="guanbi"-->
-        <!--        />-->
-      </template>
-    </van-nav-bar>
+    <van-nav-bar title="登录" />
     <van-form @submit="onSubmit" ref="form">
       <van-field
         name="mobile"
@@ -76,12 +66,12 @@ export default {
   props: {},
   data() {
     return {
-      isDisabled: false,
+      isDisabled: false, // 是否禁用发送验证码按钮
       isShowCountDown: false, // 是否展示倒计时组件
       user: {
         mobile: "13911111111",
         code: "24681",
-      },
+      }, // 表单数据
       rules: {
         mobile: [
           {
@@ -104,7 +94,7 @@ export default {
             message: "验证码只能6位",
           },
         ],
-      },
+      }, // 校验规则对象
     };
   },
   computed: {},
@@ -112,73 +102,37 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    // 倒计时组件的业务逻辑:
-    // 页面初始化的时候默认展示获取验证码按钮
-    // >> 点击按钮之后（表单校验通过）
-    // >> 显示倒计时
-    // >> 倒计时结束继续展示验证码按钮
     async onSubmit() {
-      // value自动从表单里面获取的值
-      // 获取到的值是对象：key >> 表单的name值  value >> 用户输入的值
-      // await后面写的是promise
-      // 只有promise成功了的情况下才会继续执行
-      // 参数data数据满足接口文档的格式就可以
-      // 如果捕获await的错误，用try catch
       try {
         const res = await login(this.user);
-        // 登录成功以后获取的数据存储到vuex和本地存储当中
-        this.$store.commit("setUser", res.data.data);
-        //  >> 登录成功 提示用户
-        // Toast.success("登录成功");
-        // Toast = this.$toast
+        console.log(res);
         this.$toast("登录成功");
-
-        //  跳转首页
-        this.$router.push("/");
       } catch (e) {
-        // e >> 错误对象信息
-        // if (e && e.response && e.response.data && e.response.data.message) {
-        //
-        // }
-        // 使用可选链运算符进行数据是否存在的判断
-        // 为什么要判断：如果直接从undefined获取属性，会直接报错，导致程序停止运行
         Toast.fail(e?.response?.data?.message || "服务器端错误");
       }
     },
     async sendSmsCode() {
-      // 通过传入表单name值，决定校验哪个表单 validate(name?: string | string[])
-      // Promise：异步解决方案。 解决了什么问题？回调地域 >> 链式调用形式 >> 每一次then返回一个新的promise
-      // async await >> 链式调用（不够优雅）>> 看起来是同步形式
-
-      // 不同的try处理不同的错误
-      // 校验的错误 >> 捕获
-      // 接口请求错误 >> 进行错误提示
+      // 1、校验mobile表单
       try {
         await this.$refs.form.validate("mobile");
       } catch (e) {
         console.log(e);
         return;
       }
+
+      // 2、校验通过
+      // 2-1：按钮禁用 >> 发送请求
+      // 发送成功 >> 倒计时 >> 成功的提示
+      // 发送失败 >> 错误的提示
+      // 拿到结果 >> 解除禁用
       try {
-        // 展示倒计时?
-        // 调用获取验证码接口
-        // 如果接口请求速度很慢
-
-        // 接口获取到结果之前，我的按钮一直可以重复点击(重复发送请求)
-        // 预期：接口拿到结果之后才可以进行下一次点击
-        // >> 请求的过程当中按钮需要禁用或者loading
-
-        // button 合适的时机添加disabled
         this.isDisabled = true;
-        await getSmsCode(this.user.mobile); // 时间 10s
+        await getSmsCode(this.user.mobile);
         this.isShowCountDown = true;
-        // 获取成功以后进行提示
         this.$toast.success("发送验证码成功");
       } catch (e) {
-        // 如果获取失败了，进行错误的提示
         this.$toast.fail(e?.response?.data?.message || "出错了");
       } finally {
-        // 不管成功或者失败都会执行的逻辑
         this.isDisabled = false;
       }
     },
@@ -192,7 +146,7 @@ export default {
   }
 
   .send-sms-btn {
-    width: 160px;
+    width: 152px;
     height: 46px;
     line-height: 46px;
     background-color: #ededed;

@@ -2,13 +2,15 @@
   <div class="my-container">
     <!-- 未登录头部 -->
     <div class="header not-login" v-if="!user">
-      <div class="login-btn" @click="$router.back()">
+      <div class="login-btn" @click="$router.push('/login')">
         <img class="mobile-img" src="~@/assets/mobile.png" alt="" />
         <span class="text">登录 / 注册</span>
       </div>
     </div>
     <!-- /未登录头部 -->
+
     <!-- 已登录头部 -->
+    <!-- 已登录 -->
     <div class="header user-info" v-else>
       <!-- 基本信息 -->
       <div class="base-info">
@@ -25,7 +27,6 @@
           <van-button type="default" size="mini" round>编辑资料</van-button>
         </div>
       </div>
-      <!-- 已登录 -->
       <!-- 粉丝、关注 -->
       <div class="data">
         <div class="data-item">
@@ -46,23 +47,20 @@
         </div>
       </div>
     </div>
-
     <!-- /已登录头部 -->
-
     <div class="grid-nav">
       <van-grid clickable :column-num="2">
         <van-grid-item>
           <template #icon>
-            <ToutiaoIcon icon="shoucang"></ToutiaoIcon>
+            <ToutiaoIcon icon="shoucang" />
           </template>
           <template #text>
             <span class="text">收藏</span>
           </template>
         </van-grid-item>
-
         <van-grid-item>
           <template #icon>
-            <ToutiaoIcon icon="lishi"></ToutiaoIcon>
+            <ToutiaoIcon icon="lishi" />
           </template>
           <template #text>
             <span class="text">历史</span>
@@ -75,44 +73,45 @@
     <van-cell title="用户反馈" is-link url="" />
     <van-cell title="小智同学" is-link url="" />
     <van-cell title="系统设置" is-link url="" />
-    <van-cell class="logout-cell" title="退出登录" center v-if="user" @click="logOut"/>
+    <van-cell
+      @click="logOut"
+      v-if="user"
+      class="logOut"
+      title="退出登录"
+      center
+    ></van-cell>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'MyIndex',
+  name: "MyIndex",
   components: {},
   props: {},
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(["user"]),
   },
   watch: {},
-  created () {},
-  mounted () {},
+  created() {},
+  mounted() {},
   methods: {
-    async logOut () {
-      // Dialog 是一个函数，调用后会直接在页面中弹出相应的模态框。
-      // confirm点击确认按钮时触发
+    async logOut() {
       await this.$dialog.confirm({
-        title: '提示',
-        message: '确认退出？'
-      })
-      console.log('点击了确定')
-      this.$store.commit('setUser', null)
-    }
-
-  }
-}
+        title: "提示",
+        message: "确认退出？",
+      });
+      this.$store.commit("setUser", null);
+    },
+  },
+};
 </script>
 
 <style scoped lang="less">
 .my-container {
-  padding-bottom: 100px;
   .header {
     height: 361px;
     background: url("~@/assets/banner.png");
@@ -139,73 +138,71 @@ export default {
       }
     }
   }
-}
-.user-info {
-  //background: red;
-  .base-info {
-    height: 231px;
-    padding: 76px 32px 23px;
+  .user-info {
+    //background: red;
+    .base-info {
+      height: 231px;
+      padding: 76px 32px 23px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      .left {
+        display: flex;
+        align-items: center;
+        .avatar {
+          width: 132px;
+          height: 132px;
+          border: 2px solid #fff;
+        }
+        .name {
+          font-size: 30px;
+          color: #fff;
+          margin-left: 30px;
+        }
+      }
+    }
+  }
+  .data {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    .left {
+    justify-content: space-around;
+    .data-item {
+      height: 130px;
       display: flex;
       align-items: center;
-      .avatar {
-        width: 132px;
-        height: 132px;
-        border: 2px solid #fff;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      span:nth-child(1) {
+        font-size: 36px;
+        margin-bottom: 15px;
       }
-      .name {
-        font-size: 30px;
-        color: #fff;
-        margin-left: 30px;
+      span:nth-child(2) {
+        font-size: 23px;
       }
     }
   }
-}
-.data {
-  display: flex;
-  justify-content: space-around;
-  .data-item {
-    height: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: #fff;
-    span:nth-child(1) {
-      font-size: 36px;
-      margin-bottom: 15px;
+  .grid-nav {
+    background: #fff;
+    /deep/ .toutiao {
+      font-size: 45px;
     }
-    span:nth-child(2) {
-      font-size: 23px;
+    /deep/ .toutiao-shoucang {
+      color: #eb5253;
+    }
+    /deep/ .toutiao-lishi {
+      color: #ff9d1d;
+    }
+    .text {
+      color: #000;
+      margin-top: 8px;
+      font-size: 28px;
     }
   }
-}
-.grid-nav {
-  background: #fff;
-  /deep/.toutiao {
-    font-size: 45px;
+  .logOut {
+    text-align: center;
+    color: red;
+    margin-top: 20px;
   }
-  /deep/.toutiao-shoucang {
-    color: #EB5253;
-  }
-  /deep/.toutiao-lishi {
-    color: #FF9D1D;
-  }
-  .text {
-    color: #000;
-    margin-top: 8px;
-    font-size: 28px;
-  }
-}
-.logout-cell {
-  height: 100px;
-  text-align: center;
-  color: #EB5253;
-  margin: 10px 0;
-  font-size: 30px;
 }
 </style>

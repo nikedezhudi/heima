@@ -4,18 +4,18 @@
 
 <script>
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   components: {},
   props: {},
-  data () {
-    return {}
+  data() {
+    return {};
   },
   computed: {},
   watch: {},
-  created () {},
-  mounted () {},
-  methods: {}
-}
+  created() {},
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style scoped></style>

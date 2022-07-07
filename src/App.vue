@@ -1,25 +1,19 @@
 <template>
   <div id="app">
+    <!--    <ToutiaoIcon icon="wode" />-->
+    <!--    <ToutiaoIcon icon="dianzan" />-->
+    <!--    <van-button type="primary">主要按钮</van-button>-->
+    <!--    <van-button type="info">信息按钮</van-button>-->
+    <!--    <van-button type="default">默认按钮</van-button>-->
+    <!--    <van-button type="warning">警告按钮</van-button>-->
+    <!--    <van-button type="danger">危险按钮</van-button>-->
+    <!--    <div class="title">黑马</div>-->
     <router-view />
-    <!-- <i class="toutiao toutiao-wode"></i>
-    <span class="toutiao toutiao-shanchu"></span> -->
-    <!-- 使用组件 -->
-    <!-- <ToutiaoIcon icon="wode" />
-    <ToutiaoIcon icon="dianzan" />
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="info">信息按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button> -->
   </div>
 </template>
-
-<script>
-export default {
-  name: 'App'
+<script></script>
+<style lang="less">
+.title {
+  font-size: 20px;
 }
-</script>
-
-<style scoped lang="less">
-
 </style>

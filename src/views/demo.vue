@@ -1,13 +1,3 @@
 <template>
-  <div></div>
+  <h1>23123</h1>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style>

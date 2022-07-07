@@ -1,22 +1,13 @@
 <template>
-  <i :class="['toutiao',`toutiao-${icon}`]"></i>
+  <div class="demo"><i :class="['toutiao', `toutiao-${icon}`]"></i></div>
 </template>
 
 <script>
 export default {
-  // 定义组件
   props: {
     icon: {
-      type: String
-    }
+      type: String,
+    },
   },
-  mounted () {
-    console.log(this.icon)
-  }
-
-}
+};
 </script>
-
-<style>
-
-</style>

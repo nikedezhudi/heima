@@ -1,20 +1,20 @@
 // 登录的接口
 // 引入request请求方法
-import request from '@/utils/request'
+import request from "@/utils/request";
 
-// 登陆的接口
+// 登录的接口
 export const login = (data) => {
   return request({
-    method: 'POST',
-    url: '/v1_0/authorizations',
-    data
-  })
-}
+    method: "POST",
+    url: "/v1_0/authorizations",
+    data,
+  });
+};
 
 // 获取验证码接口
 export const getSmsCode = (mobile) => {
   return request({
-    method: 'GET',
-    url: `/app/v1_0/sms/codes/${mobile}`
-  })
-}
+    method: "GET",
+    url: `/v1_0/sms/codes/${mobile}`,
+  });
+};
