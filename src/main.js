@@ -1,0 +1,49 @@
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import "@/styles/index.less";
+// vant注册
+// 引入vant样式
+import Vant from "vant";
+import "vant/lib/index.less";
+
+// 引入flexbie插件
+import "amfe-flexible";
+
+// 引入dayjs的配置文件
+import "@/utils/dayjs";
+
+// request.post("url");
+// request({
+//   method: "GET",
+//   params: {},
+// });
+
+// request({
+//   method: "POST",
+//   data: {},
+// });
+
+Vue.use(Vant);
+// Vue.prototype.$toast = Toast;
+
+// 引入组件
+import ToutiaoIcon from "@/components/ToutiaoIcon";
+
+// 注册全局组件
+Vue.component("ToutiaoIcon", ToutiaoIcon);
+Vue.config.productionTip = false;
+
+// Vue.prototype.$store = store
+// Vue.prototype.$toast = Toast
+new Vue({
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount("#app");
+
+// rem适配？
+// 1、根标签的font-size根据屏幕宽度动态设置
+// 2、样式里面单位 px全部换成rem
+// 3、rem >> 根标签的font-size
